@@ -1,0 +1,18 @@
+--- configure	2024-03-12 08:06:41.209778782 +0100
++++ configure_mod	2024-03-12 08:16:03.322216687 +0100
+@@ -1839,7 +1839,6 @@
+     cuda_llvm
+     cuvid
+     d3d11va
+-    dxva2
+     ffnvcodec
+     nvdec
+     nvenc
+@@ -1867,7 +1866,6 @@
+     libmfx
+     mmal
+     omx
+-    opencl
+     vulkan
+ "
+ 
