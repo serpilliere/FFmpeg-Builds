@@ -8,11 +8,3 @@
      ffnvcodec
      nvdec
      nvenc
-@@ -1867,7 +1866,6 @@
-     libmfx
-     mmal
-     omx
--    opencl
-     vulkan
- "
- 
