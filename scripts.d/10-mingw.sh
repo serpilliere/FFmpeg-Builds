@@ -22,6 +22,37 @@ ffbuild_dockerdl() {
 }
 
 ffbuild_dockerbuild() {
+    cat <<EOF >/tmp/patch_mingw
+--- ./mingw-w64-crt/ssp/stack_chk_guard.c       2024-03-15 09:37:14.885149044 +0100
++++ ./mingw-w64-crt/ssp/stack_chk_guard.c   2024-03-15 09:55:38.354206697 +0100
+@@ -22,6 +22,7 @@
+   // In the case of msvcrt.dll, our import library provides a small wrapper
+   // which tries to load the function dynamically, and falls back on
+   // using RtlRandomGen if not available.
++  /*
+   if (rand_s(&ui) == 0) {
+     __stack_chk_guard = (void*)(intptr_t)ui;
+ #if __SIZEOF_POINTER__ > 4
+@@ -30,11 +31,14 @@
+ #endif
+     return;
+   }
+-
++  */
++  __stack_chk_guard = (void*)0x11223344;
++  /*
+   // If rand_s failed (it shouldn't), hardcode a nonzero default stack guard.
+ #if __SIZEOF_POINTER__ > 4
+   __stack_chk_guard = (void*)0xdeadbeefdeadbeefULL;
+ #else
+   __stack_chk_guard = (void*)0xdeadbeef;
+ #endif
++  */
+ }
+EOF
+    patch -p0 < /tmp/patch_mingw
+
+
     cd mingw-w64-headers
 
     unset CFLAGS
